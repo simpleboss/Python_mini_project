@@ -35,7 +35,7 @@ def get_best_way_of_shipping(weight):
         result_of_price = cost_of_premium_ground_shipping
     elif(get_cost_of_drone_shipping(weight) <= get_cost_of_ground_shipping(weight)):
         result_of_way_of_shipping = 'Drone shipping'
-        result_of_price = cost_of_drone_shipping(weight)
+        result_of_price = get_cost_of_drone_shipping(weight)
     else:
         result_of_way_of_shipping = 'Ground shipping'
         result_of_price = get_cost_of_ground_shipping(weight)    
