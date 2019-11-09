@@ -1,14 +1,14 @@
 def cost_of_ground_shipping(weight):
     cost = 20
     if weight <= 2:
-        cost += 1.5 * weight
+        per_pound = 1.5
     elif weight <= 6:
-        cost += 3 * weight 
+        per_pound = 3 
     elif weight <= 10:
-        cost += 4 * weight
+        per_pound = 4
     else:
-        cost += 4.75 * weight
-    return cost
+        per_pound = 4.75
+    return cost + per_pound * weight
 
 cost_of_premium_ground_shipping = 125
 
@@ -17,14 +17,14 @@ cost_of_premium_ground_shipping = 125
 def cost_of_drone_shipping(weight):
     cost = 0
     if weight <= 2:
-        cost += 4.5 * weight
+        per_pound = 4.5
     elif weight <= 6:
-        cost += 9 * weight 
+        per_pound = 9 
     elif weight <= 10:
-        cost += 12 * weight
+        per_pound = 12
     else:
-        cost += 14.25 * weight
-    return cost
+        per_pound = 14.25
+    return cost + per_pound * weight
 
 #print(cost_of_drone_shipping(1.5))
 
