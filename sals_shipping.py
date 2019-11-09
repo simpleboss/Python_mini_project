@@ -28,7 +28,7 @@ def get_cost_of_drone_shipping(weight):
 
 #print(cost_of_drone_shipping(1.5))
 
-def get_best_way_of_shipping(weight):
+def print_best_way_of_shipping(weight):
     if (cost_of_premium_ground_shipping <= get_cost_of_drone_shipping(weight) and
     cost_of_premium_ground_shipping <= get_cost_of_ground_shipping(weight) ):
         result_of_way_of_shipping = 'Premium Ground shipping'
@@ -42,6 +42,6 @@ def get_best_way_of_shipping(weight):
     print('The best way of shipping :'+result_of_way_of_shipping) 
     print('The price                :'+str(result_of_price))  
 
-get_best_way_of_shipping(4.8)
+print_best_way_of_shipping(4.8)
 print('=====')
-get_best_way_of_shipping(41.5)
+print_best_way_of_shipping(41.5)
