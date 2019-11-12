@@ -32,7 +32,7 @@ def get_email_censored_learning_algorithm(email):
 print(get_email_censored_learning_algorithm(email_one))
 
 
-    # Task 3
+# Task 3
 
 
 print('Task 3')
