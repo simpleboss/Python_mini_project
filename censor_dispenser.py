@@ -11,25 +11,27 @@ email_four = open("email_four.txt", "r").read()
 
 # Task 2
 print('Task 2')
+
+
 def get_email_censored_word_or_phrase(email, word_to_censor):
-    email_list_by_word = email.split(' ')
+    email_by_words = email.split(' ')
     email_censored = []
-    i = 0
-    while i < len(email_list_by_word):
+    for i in range(len(email_by_words)):
         is_censored = False
         j = 0
-        while word_to_censor.split()[j] in email_list_by_word[i + j].lower():
+        while word_to_censor.split()[j] in email_by_words[i + j].lower():
             if j == len(word_to_censor.split()) - 1:
                 is_censored = True
-                email_list_by_word_to_scan = email_list_by_word[i + j].lower()
-                email_list_by_word_to_scan_censored = email_list_by_word_to_scan.replace(word_to_censor.split()[j], 'CENSORED')
+                email_list_by_word_to_scan = email_by_words[i + j].lower()
+                email_list_by_word_to_scan_censored = \
+                    email_list_by_word_to_scan.replace(word_to_censor.split()[j], 'CENSORED')
                 email_censored.append(email_list_by_word_to_scan_censored)
                 i += j + 1
                 break
             else:
                 j += 1
         if not is_censored:
-            email_censored.append(email_list_by_word[i])
+            email_censored.append(email_by_words[i])
             i += 1
     return ' '.join(email_censored)
 
@@ -44,17 +46,16 @@ print('Task 3')
 
 
 def get_censor_list_of_words_and_phrases(email, words_to_censor):
-    email_list_by_word = email.split(' ')
+    email_by_words = email.split(' ')
     email_censored = []
-    i = 0
-    while i < len(email_list_by_word):
+    for i in range(len(email_by_words)):
         is_censored = False
         for word_to_censor in words_to_censor:
             j = 0
-            while word_to_censor.split()[j] in email_list_by_word[i + j].lower():
+            while word_to_censor.split()[j] in email_by_words[i + j].lower():
                 if j == len(word_to_censor.split()) - 1:
                     is_censored = True
-                    email_list_by_word_to_scan = email_list_by_word[i + j].lower()
+                    email_list_by_word_to_scan = email_by_words[i + j].lower()
                     email_list_by_word_to_scan_censored = email_list_by_word_to_scan.replace(word_to_censor.split()[j], 'CENSORED')
                     email_censored.append(email_list_by_word_to_scan_censored)
                     i += j + 1
@@ -62,7 +63,7 @@ def get_censor_list_of_words_and_phrases(email, words_to_censor):
                 else:
                     j += 1
         if not is_censored:
-            email_censored.append(email_list_by_word[i])
+            email_censored.append(email_by_words[i])
             i += 1
     return ' '.join(email_censored)
 
