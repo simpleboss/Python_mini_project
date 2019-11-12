@@ -11,25 +11,30 @@ email_four = open("email_four.txt", "r").read()
 
 # Task 2
 print('Task 2')
-def get_email_censored_learning_algorithm(email):
+def get_email_censored_word_or_phrase(email, word_to_censor):
     email_list_by_word = email.split(' ')
-    email_censored_learning_algorithm = []
+    email_censored = []
     i = 0
     while i < len(email_list_by_word):
-        if 'learning' in email_list_by_word[i].lower():
-            if 'algorithm' in email_list_by_word[i+1].lower():
-                email_censored_learning_algorithm.append('CENSORED')
-                i += 2
+        is_censored = False
+        j = 0
+        while word_to_censor.split()[j] in email_list_by_word[i + j].lower():
+            if j == len(word_to_censor.split()) - 1:
+                is_censored = True
+                email_list_by_word_to_scan = email_list_by_word[i + j].lower()
+                email_list_by_word_to_scan_censored = email_list_by_word_to_scan.replace(word_to_censor.split()[j], 'CENSORED')
+                email_censored.append(email_list_by_word_to_scan_censored)
+                i += j + 1
+                break
             else:
-                email_censored_learning_algorithm.append(email_list_by_word[i])
-                i += 1
-        else:
-            email_censored_learning_algorithm.append(email_list_by_word[i])
+                j += 1
+        if not is_censored:
+            email_censored.append(email_list_by_word[i])
             i += 1
-    return ' '.join(email_censored_learning_algorithm)
+    return ' '.join(email_censored)
 
 
-print(get_email_censored_learning_algorithm(email_one))
+print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
 
 
 # Task 3
