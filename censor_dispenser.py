@@ -18,14 +18,17 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
     # print('count(word_to_censor) :' + str(email_censored_list[-1].lower().count(word_to_censor)))
 
     email_censored_list = [email]
-    for i in range(email_censored_list[0].lower().count(word_to_censor)):
-        # print('find(word_to_censor): ' + str(email_censored_list[i].lower().find(word_to_censor)))
-
+    word_to_censor_count = email_censored_list[0].lower().count(word_to_censor)
+    for i in range(word_to_censor_count):
+        # print('================================')
+        # print('word_to_censor :' + word_to_censor)
+        # print(' i :' + str(i))
+        # print('email_censored_list[i].lower().find(word_to_censor) :' + str(email_censored_list[i].lower().find(word_to_censor)))
         if email_censored_list[i][email_censored_list[i].lower().find(word_to_censor) - 1] \
                 in alphabet_list_without_s or\
                 email_censored_list[i][email_censored_list[i].lower().find(word_to_censor) + len(word_to_censor)]\
                 in alphabet_list_without_s:
-            continue
+            email_censored_list.append(email_censored_list[-1])
         else:
             email_censored_list.append('')
             email_censored_list[-1] += \
@@ -46,15 +49,16 @@ print('Task 3')
 
 
 def get_censor_list_of_words_and_phrases(email, words_to_censor):
-    email_censored = email
+    email_censored_words_to_censor = [email]
     for index, word_to_censor in enumerate(words_to_censor):
-        print(index)
-        print(get_email_censored_word_or_phrase(email_censored, word_to_censor))
-    # return email_censored
+        email_censored_words_to_censor.append(get_email_censored_word_or_phrase(email_censored_words_to_censor[index], word_to_censor))
+        # print(get_email_censored_word_or_phrase(email_censored_words_to_censor, word_to_censor))
+    return email_censored_words_to_censor[-1]
 
 
 proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
-# print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
+print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
+# print(get_censor_list_of_words_and_phrases(email_two, ["she", "personality matrix", "abcdefg"]))
 
 
 # # Task 4
