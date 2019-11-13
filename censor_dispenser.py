@@ -14,31 +14,44 @@ print('Task 2')
 
 
 def get_email_censored_word_or_phrase(email, word_to_censor):
-    if len(email) < len(word_to_censor):
-        return email
-    email_censored = ''
-    pass_count = 0
-    alphabet_list_without_s = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    for email_index, email_letter in enumerate(email):
-        if email_index < pass_count:
-            continue
-        equal_count = 0
-        letter_to_add = ''
-        for word_index, word_letter in enumerate(word_to_censor):
-            pass_count = email_index + word_index + 1
-            letter_to_add += email[email_index + word_index]
-            if email[email_index + word_index].lower() == word_letter.lower():
-                equal_count += 1
-            else:
-                email_censored += letter_to_add
-                break
+    email_censored = [email]
+    for i in range(email.lower().count(word_to_censor)):
+        if word_to_censor in email_censored[i].lower():
+            email_censored.append('')
+            email_censored[-1] += \
+                email_censored[i][:email_censored[i].find(word_to_censor)] + \
+                "CENSORED" + \
+                email_censored[i][email_censored[i].find(word_to_censor)+len(word_to_censor):]
+            print(email_censored[i].find(word_to_censor))
 
-            if equal_count == len(word_to_censor):
-                if email[email_index + word_index + 1] in alphabet_list_without_s:
-                    email_censored += email[email_index: email_index + len(word_to_censor) + 1]
-                else:
-                    email_censored += 'CENSORED'
-    return email_censored
+    return email_censored[-1]
+
+# for loop by word
+    # if len(email) < len(word_to_censor):
+    #     return email
+    # email_censored = ''
+    # pass_count = 0
+    # alphabet_list_without_s = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    # for email_index, email_letter in enumerate(email):
+    #     if email_index < pass_count:
+    #         continue
+    #     equal_count = 0
+    #     letter_to_add = ''
+    #     for word_index, word_letter in enumerate(word_to_censor):
+    #         pass_count = email_index + word_index + 1
+    #         letter_to_add += email[email_index + word_index]
+    #         if email[email_index + word_index].lower() == word_letter.lower():
+    #             equal_count += 1
+    #         else:
+    #             email_censored += letter_to_add
+    #             break
+    #
+    #         if equal_count == len(word_to_censor):
+    #             if email[email_index + word_index + 1] in alphabet_list_without_s:
+    #                 email_censored += email[email_index: email_index + len(word_to_censor) + 1]
+    #             else:
+    #                 email_censored += 'CENSORED'
+    # return email_censored
 
 # for loop with range(len(email))
     # i = 0
@@ -68,7 +81,7 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
     # return email_censored
 
 
-# print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
+print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
 
 
 # Task 3
@@ -111,13 +124,14 @@ def get_censor_after_negative_words_twice(email, negative_words_to_censor):
 negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help",
                       "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed",
                       "distressed", "concerning", "horrible", "horribly", "questionable"]
-#print(get_censor_after_negative_words_twice(email_three, negative_words))
+# print(get_censor_after_negative_words_twice(email_three, negative_words))
+
 
 # # # Task 5
 print('Task 5')
 
 
-def get_censor_any_words_before_and_after_CENSORED(email):
+def get_censor_any_words_before_and_after_censored(email):
     email_censored = get_censor_list_of_words_and_phrases(email, proprietary_terms)
     email_censored = get_censor_list_of_words_and_phrases(email, negative_words)
     indices_to_censor = []
@@ -127,14 +141,14 @@ def get_censor_any_words_before_and_after_CENSORED(email):
             indices_to_censor.append(word_index)
             indices_to_censor.append(word_index + 1)
 
-    email_censored_any_words_before_and_after_CENSORED = []
+    email_censored_any_words_before_and_after_censored = []
     for word_index, word in enumerate(email_censored.split(' ')):
         if word_index in indices_to_censor:
             word_to_add = 'CENSORED'
         else:
             word_to_add = word
-        email_censored_any_words_before_and_after_CENSORED.append(word_to_add)
-    return ' '.join(email_censored_any_words_before_and_after_CENSORED)
+        email_censored_any_words_before_and_after_censored.append(word_to_add)
+    return ' '.join(email_censored_any_words_before_and_after_censored)
 
 
-print(get_censor_any_words_before_and_after_CENSORED(email_four))
+# print(get_censor_any_words_before_and_after_CENSORED(email_four))
