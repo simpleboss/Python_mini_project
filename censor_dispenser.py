@@ -18,7 +18,7 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
         return email
     email_censored = ''
     pass_count = 0
-    alphabet_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    alphabet_list_without_s = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     for email_index, email_letter in enumerate(email):
         if email_index < pass_count:
             continue
@@ -34,7 +34,7 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
                 break
 
             if equal_count == len(word_to_censor):
-                if email[email_index + word_index + 1] in alphabet_list:
+                if email[email_index + word_index + 1] in alphabet_list_without_s:
                     email_censored += email[email_index: email_index + len(word_to_censor) + 1]
                 else:
                     email_censored += 'CENSORED'
@@ -65,7 +65,7 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
     #         equal_count = 0
     #         i = 0
     #         email_censored += word_to_add
-    return email_censored
+    # return email_censored
 
 
 # print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
@@ -78,8 +78,9 @@ print('Task 3')
 
 
 def get_censor_list_of_words_and_phrases(email, words_to_censor):
+    email_censored = email
     for word_to_censor in words_to_censor:
-        email_censored = get_email_censored_word_or_phrase(email, word_to_censor)
+        email_censored = get_email_censored_word_or_phrase(email_censored, word_to_censor)
     return email_censored
 
 
