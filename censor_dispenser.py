@@ -85,20 +85,33 @@ def get_censor_list_of_words_and_phrases(email, words_to_censor):
 
 
 proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
-print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
+# print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
 
 
 # # Task 4
-# print('Task 4')
-#
-#
-# def get_censor_after_negative_words_twice(email, words_to_censor):
-#     pass
-#
-#
-# negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help",
-#                       "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed",
-#                       "distressed", "concerning", "horrible", "horribly", "questionable"]
-# print(get_censor_after_negative_words_twice(email_three, negative_words))
+print('Task 4')
+
+
+def get_censor_after_negative_words_twice(email, negative_words_to_censor):
+    email_censored_after_negative_words_twice = ''
+    email_censored = get_censor_list_of_words_and_phrases(email, proprietary_terms)
+    negative_count = 0
+    for email_index, email_word in enumerate(email_censored.split(' ')):
+        word_to_add = ' '+email_word
+        for word in negative_words:
+            if word in email_word.lower():
+                if negative_count == 2:
+                    word_to_add = email_word.replace(word, " CENSORED")
+                else:
+                    negative_count += 1
+        email_censored_after_negative_words_twice += word_to_add
+    return email_censored_after_negative_words_twice
+
+
+negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help",
+                      "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed",
+                      "distressed", "concerning", "horrible", "horribly", "questionable"]
+print(get_censor_after_negative_words_twice(email_three, negative_words))
+
 # # # Task 5
 # # print('Task 5')
