@@ -19,27 +19,28 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
     email_censored = ''
     pass_count = 0
     alphabet_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    for index_email, letter_email in enumerate(email):
-        if index_email < pass_count:
+    for email_index, email_letter in enumerate(email):
+        if email_index < pass_count:
             continue
         equal_count = 0
         letter_to_add = ''
-        for index_word, letter_word in enumerate(word_to_censor):
-            pass_count = index_email + index_word + 1
-            letter_to_add += email[index_email + index_word]
-            if email[index_email + index_word].lower() == letter_word.lower():
+        for word_index, word_letter in enumerate(word_to_censor):
+            pass_count = email_index + word_index + 1
+            letter_to_add += email[email_index + word_index]
+            if email[email_index + word_index].lower() == word_letter.lower():
                 equal_count += 1
             else:
                 email_censored += letter_to_add
                 break
 
             if equal_count == len(word_to_censor):
-                if email[index_email + index_word + 1] in alphabet_list:
-                    email_censored += email[index_email: index_email + len(word_to_censor) + 1]
+                if email[email_index + word_index + 1] in alphabet_list:
+                    email_censored += email[email_index: email_index + len(word_to_censor) + 1]
                 else:
                     email_censored += 'CENSORED'
     return email_censored
 
+# for loop with range(len(email))
     # i = 0
     # for j in range(len(email)):
     #     if word_to_censor[i].lower() == email[j].lower():
@@ -67,43 +68,25 @@ def get_email_censored_word_or_phrase(email, word_to_censor):
     return email_censored
 
 
-print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
+# print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
 
 
 # Task 3
-#
-#
-# print('Task 3')
-#
-#
-# def get_censor_list_of_words_and_phrases(email, words_to_censor):
-#     email_by_words = email.split(' ')
-#     email_censored = []
-#     i = 0
-#     while i < len(email_by_words):
-#         is_censored = False
-#         for word_to_censor in words_to_censor:
-#             j = 0
-#             while word_to_censor.split()[j] in email_by_words[i + j].lower():
-#                 if j == len(word_to_censor.split()) - 1:
-#                     is_censored = True
-#                     email_list_by_word_to_scan = email_by_words[i + j].lower()
-#                     email_list_by_word_to_scan_censored = email_list_by_word_to_scan.replace(word_to_censor.split()[j], 'CENSORED')
-#                     email_censored.append(email_list_by_word_to_scan_censored)
-#                     i += j + 1
-#                     break
-#                 else:
-#                     j += 1
-#         if not is_censored:
-#             email_censored.append(email_by_words[i])
-#             i += 1
-#     return ' '.join(email_censored)
-#
-#
-# proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
-# print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
-#
-#
+
+
+print('Task 3')
+
+
+def get_censor_list_of_words_and_phrases(email, words_to_censor):
+    for word_to_censor in words_to_censor:
+        email_censored = get_email_censored_word_or_phrase(email, word_to_censor)
+    return email_censored
+
+
+proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
+print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
+
+
 # # Task 4
 # print('Task 4')
 #
