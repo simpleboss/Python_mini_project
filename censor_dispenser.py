@@ -14,33 +14,56 @@ print('Task 2')
 
 
 def get_email_censored_word_or_phrase(email, word_to_censor):
+    if len(email) < len(word_to_censor):
+        return email
     email_censored = ''
-    equal_count = 0
-    i = 0
+    pass_count = 0
     alphabet_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    for j in range(len(email)):
-        if word_to_censor[i].lower() == email[j].lower():
-            equal_count += 1
-            i += 1
-        else:
-            email_censored += email[j-i:j+1]
-            i = 0
-            equal_count = 0
+    for index_email, letter_email in enumerate(email):
+        if index_email < pass_count:
             continue
-
-        if i == len(word_to_censor):
-            # print('found')
-            # print(i)
-            # print(equal_count)
-            # print(len(word_to_censor)+1)
-            # print(email[j+1].lower())
-            if equal_count == len(word_to_censor) and email[j+1].lower() not in alphabet_list:
-                word_to_add = 'CENSORED'
+        equal_count = 0
+        letter_to_add = ''
+        for index_word, letter_word in enumerate(word_to_censor):
+            pass_count = index_email + index_word + 1
+            letter_to_add += email[index_email + index_word]
+            if email[index_email + index_word].lower() == letter_word.lower():
+                equal_count += 1
             else:
-                word_to_add = email[j-len(word_to_censor):j+1]
-            equal_count = 0
-            i = 0
-            email_censored += word_to_add
+                email_censored += letter_to_add
+                break
+
+            if equal_count == len(word_to_censor):
+                if email[index_email + index_word + 1] in alphabet_list:
+                    email_censored += email[index_email: index_email + len(word_to_censor) + 1]
+                else:
+                    email_censored += 'CENSORED'
+    return email_censored
+
+    # i = 0
+    # for j in range(len(email)):
+    #     if word_to_censor[i].lower() == email[j].lower():
+    #         equal_count += 1
+    #         i += 1
+    #     else:
+    #         email_censored += email[j-i:j+1]
+    #         i = 0
+    #         equal_count = 0
+    #         continue
+    #
+    #     if i == len(word_to_censor):
+    #         # print('found')
+    #         # print(i)
+    #         # print(equal_count)
+    #         # print(len(word_to_censor)+1)
+    #         # print(email[j+1].lower())
+    #         if equal_count == len(word_to_censor) and email[j+1].lower() not in alphabet_list:
+    #             word_to_add = 'CENSORED'
+    #         else:
+    #             word_to_add = email[j-len(word_to_censor):j+1]
+    #         equal_count = 0
+    #         i = 0
+    #         email_censored += word_to_add
     return email_censored
 
 
