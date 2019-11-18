@@ -1,3 +1,5 @@
+import string
+print(string.ascii_lowercase)
 # These are the emails you will be censoring.
 # The open() function is opening the text file that the emails are contained in
 # and the .read() method is allowing us to save their contexts to the following variables:
@@ -14,18 +16,49 @@ print('Task 2')
 
 
 def get_email_censored_word_or_phrase(email, word_to_censor):
-    alphabet_list_without_s = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
-                               't', 'u', 'v', 'w', 'x', 'y', 'z']
-    email_censored = email
-    word_to_censor_count = email.lower().count(word_to_censor)
-    for i in range(word_to_censor_count):
-        word_to_censored_index = email_censored.lower().find(word_to_censor)
-        if email_censored[word_to_censored_index - 1] not in alphabet_list_without_s and email_censored[word_to_censored_index + len(word_to_censor)] not in alphabet_list_without_s:
-            email_censored = email_censored[:word_to_censored_index] + "CENSORED" + email_censored[word_to_censored_index + len(word_to_censor):]
+    alphabets = string.ascii_lowercase
+
+    email_lower = email.lower()
+    email_not_censored = email
+    email_censored = ''
+    remained_index = 0
+    how_many_word_to_censor = email_lower.count(word_to_censor)
+    for _ in range(how_many_word_to_censor):
+        found_index = remained_index + email_lower[remained_index:].find(word_to_censor)
+        email_censored = email_censored + email[remained_index:found_index]
+
+        left_character = email[found_index - 1] if found_index > 0 else None
+        right_character = email[found_index + len(word_to_censor)] if found_index + len(word_to_censor) < len(email) else None
+        if (left_character is None or left_character not in alphabets) and (right_character is None or right_character not in alphabets):
+            email_censored = email_censored + 'CENSORED'
+        else:
+            email_censored = email_censored + word_to_censor
+        remained_index = found_index + len(word_to_censor)
+
+    email_censored = email_censored + email[remained_index:]
     return email_censored
 
 
-print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
+# print(get_email_censored_word_or_phrase(email_one, 'learning algorithms'))
+# Test Case
+test_case = [["b", "a"],
+             ["a", "a"],
+             ["a a a a a", "a"],
+             ["A", "a"],
+             ["a!", "a"],
+             ["a.", "a"],
+             ["ab", "a"],
+             ["aab", "a"],
+             ["ba", "a"],
+             ["baa", "a"],
+             ["ead", "a"],
+             ["baaab", "a"],
+             ["ab a", "a"],
+             ["a ab", "a"],
+             ["baab eaae", "a"]]
+for case in test_case:
+    print(case)
+    print(get_email_censored_word_or_phrase(case[0], case[1]))
 
 
 # Task 3
@@ -33,46 +66,45 @@ print('Task 3')
 
 
 def get_censor_list_of_words_and_phrases(email, words_to_censor):
-    email_censored_words_to_censor = [email]
-    for index, word_to_censor in enumerate(words_to_censor):
-        email_censored_words_to_censor.append(
-            get_email_censored_word_or_phrase(email_censored_words_to_censor[index], word_to_censor))
-        # print(get_email_censored_word_or_phrase(email_censored_words_to_censor, word_to_censor))
-    return email_censored_words_to_censor[-1]
+    email_censored = email
+    for word_to_censor in words_to_censor:
+        email_censored = get_email_censored_word_or_phrase(email_censored, word_to_censor)
+    return email_censored
 
 
 proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her",
                      "herself"]
+
 # print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
+# print(get_censor_list_of_words_and_phrases("This is my test.", ["is"]))
 
 
-# # Task 4
+# Task 4
 print('Task 4')
-
 word_boundary_list = [' ', '.', ',', '!', '?', ':', ';', '(', ')', '[', ']', '{', '}', '\'', '\"', '-', '+', '*',
                       '\%', '=', '`', '~', '|']
+
+
 def get_censor_after_negative_words_twice(email, negative_words_to_censor):
-    email_censored_from_task3_function = get_censor_list_of_words_and_phrases(email, proprietary_terms)
-    negative_words_indices_list = []
-    for negative_word in negative_words_to_censor:
-        last_found_index = len(email_censored_from_task3_function) - 1
-        for current_word_index in range(0, len(email_censored_from_task3_function), last_found_index):
-            if email_censored_from_task3_function[
-                email_censored_from_task3_function.find(negative_word, current_word_index) - 1] in word_boundary_list and \
-                    email_censored_from_task3_function[
-                        email_censored_from_task3_function.find(negative_word, current_word_index) + len(negative_word)] \
-                    in word_boundary_list:
-                negative_words_indices_list.append(email_censored_from_task3_function.find(negative_word))
-                last_found_index = email_censored_from_task3_function.find(negative_word, current_word_index)
+    alphabet_list_without_s = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+                               't', 'u', 'v', 'w', 'x', 'y', 'z']
+    email = get_censor_list_of_words_and_phrases(email, proprietary_terms)
+    negative_words_indices = []
+    for word_to_censor in negative_words_to_censor:
+        word_to_censor_count = email.lower().count(word_to_censor)
+        word_to_censor_indices = [0]
+        for i in range(word_to_censor_count):
+            word_to_censored_index = email[word_to_censor_indices[-1]:].lower().find(word_to_censor)
+            if email.lower()[word_to_censored_index - 1] not in alphabet_list_without_s and \
+                    email.lower()[word_to_censored_index + len(word_to_censor)] not in alphabet_list_without_s:
+                word_to_censor_indices.append(word_to_censored_index)
             else:
                 break
-    print('negative_words_indices_list :' + str(negative_words_indices_list))
-    print('sort()' + str(sorted(negative_words_indices_list)))
-    email_censored_after_negative_words_twice = \
-        email_censored_from_task3_function[:sorted(negative_words_indices_list)[1]+1] + \
-        get_censor_list_of_words_and_phrases\
-            (email_censored_from_task3_function[sorted(negative_words_indices_list)[1]+1:], negative_words)
-    return email_censored_after_negative_words_twice
+        word_to_censor_indices.pop(0)
+        negative_words_indices.extend(word_to_censor_indices)
+    begin_index_to_censor = sorted(negative_words_indices)[1]
+    email_censored = email[:begin_index_to_censor + 1] + get_censor_list_of_words_and_phrases(email[begin_index_to_censor + 1:], negative_words_to_censor)
+    return email_censored
 
 
 negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help",
