@@ -48,7 +48,7 @@ test_case_answer = [
 ]
 
 for i in range(len(test_case_question)):
-    assert(delete_starting_evens(test_case_question[i]) == test_case_answer[i], "Wrong")
+    assert delete_starting_evens(test_case_question[i]) == test_case_answer[i], "Wrong"
 
 # Uncomment the lines below when your function is done
 print(delete_starting_evens([4, 8, 10, 11, 12, 15]))
