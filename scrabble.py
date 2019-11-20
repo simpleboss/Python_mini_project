@@ -43,9 +43,10 @@ for player, words in player_to_words.items():
     for word in words:
         player_points += score_word(word)
     # Task 13
-    player_to_points[player] = str(player_points)
+    player_to_points[player] = player_points
 
 # Task 14
+print('Task 14')
 print(player_to_points)
 
 # Task 15
