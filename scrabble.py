@@ -49,21 +49,31 @@ for player, words in player_to_words.items():
 print('Task 14')
 print(player_to_points)
 
+
 # Task 15
 def play_word(player, word):
     player_to_words[player].append(word)
+
 
 play_word('player1', 'APPLE')
 print(player_to_words['player1'])
 
 
-def update_point_totals(player, word, player_to_points):
-    player_to_points[player] += score_word(word)
-    return player_to_points[player]
+def update_point_totals():
+    for player, words in player_to_words.items():
+        player_points = 0
+        for word in words:
+            player_points += score_word(word)
+        player_to_points[player] = player_points
+
 
 print('Update point totals')
-print(update_point_totals('player1', 'DICTIONARY', player_to_points))
+update_point_totals()
+print(player_to_points)
 
 
 letter_to_points.update({key.lower(): value for key, value in zip(letters, points)})
-print(update_point_totals('player1', 'hanoi', player_to_points))
+play_word('player1', 'hanoi')
+update_point_totals()
+print(player_to_points)
+
