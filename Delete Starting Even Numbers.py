@@ -1,13 +1,10 @@
 def delete_starting_evens(lst):
-    result_lst = list(lst)
     for i in range(len(lst)):
-        # print(i)
-        # print(lst)
-        if lst[i] % 2 == 0:
-            result_lst.pop(result_lst.index(lst[i]))
+        if lst[0] % 2 == 0:
+            lst.pop(0)
         else:
             break
-    return result_lst
+    return lst
 
 
 test_case_question = [
