@@ -56,13 +56,19 @@ test_case = [["b", "a"],
              ["ab a", "a"],
              ["a ab", "a"],
              ["baab eaae", "a"]]
-for case in test_case:
-    print(case)
-    print(get_email_censored_word_or_phrase(case[0], case[1]))
+# for case in test_case:
+#     print(case)
+#     print(get_email_censored_word_or_phrase(case[0], case[1]))
 
 
 # Task 3
 print('Task 3')
+# 3.
+# Write a function that can censor not just a specific word or phrase from a body of text,
+# but a whole list of words and phrases, and then return the text.
+# Mr. Cloudy has asked that you censor all words and phrases from the following list in email_two.
+# proprietary_terms =
+# ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
 
 
 def get_censor_list_of_words_and_phrases(email, words_to_censor):
@@ -75,8 +81,11 @@ def get_censor_list_of_words_and_phrases(email, words_to_censor):
 proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her",
                      "herself"]
 
+assert get_censor_list_of_words_and_phrases('This is my test', []) == 'This is my test', 'wrong'
+assert get_censor_list_of_words_and_phrases('This is my test', ['is']) == 'This CENSORED my test', 'wrong'
+assert get_censor_list_of_words_and_phrases('This is my test', ['is', 'test']) == 'This CENSORED my CENSORED', 'wrong'
+assert get_censor_list_of_words_and_phrases('This is my test', ['android']) == 'This is my test', 'wrong'
 # print(get_censor_list_of_words_and_phrases(email_two, proprietary_terms))
-# print(get_censor_list_of_words_and_phrases("This is my test.", ["is"]))
 
 
 # Task 4
