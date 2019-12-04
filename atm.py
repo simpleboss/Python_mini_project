@@ -1,14 +1,16 @@
-n = int(input())
-p_list = input().split(' ')
+# n = int(input())
+# p_list = input().split(' ')
+
+n = 5
+p_list = [3, 1, 4, 3, 2]
 
 
 def total_time(p_list):
     new_list = sorted(p_list)
-    remained_n = n
+    n_list = range(len(p_list), 0, -1)
     result = 0
-    for p in new_list:
+    for (p, remained_n) in zip(new_list, n_list):
         result += remained_n * int(p)
-        remained_n -= 1
     return result
 
 
